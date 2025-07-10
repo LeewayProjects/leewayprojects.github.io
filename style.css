@@ -1,0 +1,367 @@
+/* ------------------------------------------------------------------
+   Global & Variables
+------------------------------------------------------------------ */
+
+/* Google Font — Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+  --sidebar-width: 240px; /* kept for reference, but layout now uses grid tracks */
+  --font-primary: 'Poppins', sans-serif;
+  --bg-main: #fafafa;
+  --bg-card: #ffffff;
+  --text-main: #1C1C1E;
+  --accent: #581252;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ------------------------------------------------------------------
+   Reset & Base
+------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* ------------------------------------------------------------------
+   Mobile‑first default ( < 769 px )
+------------------------------------------------------------------ */
+body {
+  display: block;                /* natural flow on small screens */
+  font-family: var(--font-primary);
+  color: var(--text-main);
+  background: var(--bg-main);
+  line-height: 1.5;
+}
+
+/* ---- Sidebar (mobile) ---- */
+.sidebar {
+  position: static;   /* stacks naturally */
+  width: 100%;
+  height: auto;
+  padding: 2rem 1.25rem;
+  background: #fff;
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  z-index: 900;
+}
+
+/* Logo sizing */
+.sidebar-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo a {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+/* Nav */
+.nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 500;
+  transition: color 0.2s ease;
+  text-align: center;
+  display: block;
+}
+
+.nav a:hover,
+.nav a:focus {
+  color: var(--accent);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  font-size: 0.875rem;
+}
+
+/* ---- Main Content (mobile) ---- */
+main {
+  width: 100%;
+  overflow-x: hidden;
+  padding: 0rem;
+}
+
+/* Project grid — single column by default */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 0;
+}
+
+/* Card styles */
+.grid-item {
+  position: relative;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border-radius: 0.1rem;
+  background: var(--bg-card);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.grid-item img.top-aligned {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: top !important; 
+    transition: transform 0.35s ease !important;
+}
+
+.grid-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.grid-item:hover .overlay {
+  opacity: 1;
+}
+
+.overlay h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.overlay p {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;        /* sidebar stays in normal flow */
+    width: 100%;             /* full width on mobile */
+    height: auto;            /* natural height */
+    transform: none;         /* no translate */
+    transition: none;        /* no animation */
+    border-right: none;      /* remove border to keep it clean */
+  }
+
+  body.nav-open .sidebar {
+    transform: translateX(0);
+  }
+
+    main {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Scroll‑to‑top button (unchanged) */
+.scroll-to-top {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  border: none;
+  outline: none;
+  background-color: #494ff6dd;
+  color: white;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.scroll-to-top::after {
+  content: "\2191";
+}
+
+.scroll-to-top:hover {
+  opacity: 1;
+  background-color: #492ca9dd;
+}
+
+/* ------------------------------------------------------------------
+   ≥ 769 px — Desktop: 4‑column grid (sidebar + 3 card columns)
+------------------------------------------------------------------ */
+@media (min-width: 769px) {
+  body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 equal 25 % columns */
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid #e5e5e5;
+    grid-column: 1 / 2; /* first column */
+  }
+
+  main {
+    grid-column: 2 / 5; /* spans remaining 3 columns */
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* three equal card columns */
+    gap: 0rem; /* keep original card spacing on desktop */
+  }
+}
+
+/* About page Base layout - sidebar + main content */
+.about-page {
+  display: grid;
+  grid-template-columns: 25% 1fr; /* Sidebar 25%, main content takes remaining space */
+  min-height: 100vh;
+}
+
+.about-page .sidebar {
+  /* Your existing sidebar styles */
+}
+
+.about-page .main-content {
+  display: flex;
+  align-items: center; /* Centers content vertically */
+  justify-content: center; /* Centers content horizontally */
+  padding: 2rem;
+}
+
+.about-page .inner-grid {
+  max-width: 800px; /* Prevents text from becoming too wide */
+  width: 100%;
+}
+
+.about-page .content-text {
+  text-align: center; /* Centers the text within its container */
+  line-height: 1.6;
+}
+
+.about-page .content-text p {
+  margin-bottom: 1rem;
+}
+
+
+/* Grid layout for Research page */
+
+.research-page .outer-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+}
+
+.research-page .inner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.research-intro-section {
+  display: grid;
+  justify-content: center;
+  align-items: left;
+  min-height: 120px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.research-intro-content {
+  max-width: 1200px;
+  width: 100%;
+  padding: 24px 32px;
+  color: #161717; 
+  text-align: left;
+}
+
+.research-intro-hero {
+  width: 100%;
+  overflow: hidden;
+}
+
+.research-intro-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.about-intro-hero {
+  width: 100%;
+  overflow: visible;
+}
+
+.about-intro-hero img {
+  float: left;
+  width: 40%; /* Adjust based on your layout */
+  height: auto;
+  margin-right: 1em;
+  margin-bottom: 0.5em;
+}
+
+/* responsive drawer */
+@media (max-width: 768px) {
+    .drawer {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .drawer-image {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
