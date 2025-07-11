@@ -159,7 +159,7 @@ const projectData = {
         when: '2014-17',
         where: '-',
         tags: ['Her Noise', 'Feminist sound art', 'Experimental Music', 'Tate Modern'],
-        projectUrl: 'https://hernoise.org/her-noise-feminisms-the-sonic/'
+        projectUrl: 'https://feministfrequencies.org/'
     },
     'fractured': {
         title: 'Fractured Intimacies',
@@ -211,7 +211,7 @@ const projectData = {
         when: '2015',
         where: 'Wysing UK & Melbourne Australia',
         tags: ['performance score', 'ethical listening', 'spoken word', 'Wysing', 'Electra'],
-        projectUrl: 'https://www.colomboscope.lk/athousandchannels-episode-one'
+        projectUrl: 'https://www.electra-productions.com/projects/2015/wysing/ourwordisourbond.shtml'
     },
     'scores': {
         title: 'Here are some scores for you to do',
@@ -263,7 +263,7 @@ const projectData = {
         when: '2012',
         where: 'Tate Modern, London, UK',
         tags: ['Her Noise', 'Pauline Oliveros', 'Experimental Music', 'Tate Modern'],
-        projectUrl: 'https://hernoise.org/events-responses/swdg/'
+        projectUrl: 'https://hernoise.org/her-noise-feminisms-the-sonic/#solanas-monroe'
     },
     'wrpm': {
         title: 'The WRPM Game',
@@ -289,7 +289,7 @@ const projectData = {
         when: '2018-19',
         where: 'Athens, Greece',
         tags: ['GenderPanic', 'LGBTQIA+', 'Socially Engaged Art', 'Athens'],
-        projectUrl: ''
+        projectUrl: 'http://youtu.be/zpTwKqN-NjQ'
     },
 };
 
@@ -349,8 +349,19 @@ function openDrawer(projectId) {
     if (teamElement) {
         teamElement.textContent = project.team || 'Not specified';
     }
-    
-    document.getElementById('view-project-btn').href = project.projectUrl;
+
+    const viewProjectBtn = document.getElementById('view-project-btn');
+
+    if (viewProjectBtn && project?.projectUrl) {
+        viewProjectBtn.href = project.projectUrl;
+        viewProjectBtn.target = '_blank'; // Opens in a new tab/window
+        viewProjectBtn.rel = 'noopener noreferrer'; // Security best practice
+    }   
+    else if (viewProjectBtn) {
+        viewProjectBtn.removeAttribute('href');
+        viewProjectBtn.style.display = 'none';
+    }
+
 
     // Populate tags
     const tagsContainer = document.getElementById('project-tags');
