@@ -352,14 +352,20 @@ function openDrawer(projectId) {
 
     const viewProjectBtn = document.getElementById('view-project-btn');
 
-    if (viewProjectBtn && project?.projectUrl) {
-        viewProjectBtn.href = project.projectUrl;
-        viewProjectBtn.target = '_blank'; // Opens in a new tab/window
-        viewProjectBtn.rel = 'noopener noreferrer'; // Security best practice
-    }   
-    else if (viewProjectBtn) {
-        viewProjectBtn.removeAttribute('href');
-        viewProjectBtn.style.display = 'none';
+    if (viewProjectBtn) {
+        if (project?.projectUrl && project.projectUrl !== '' && project.projectUrl !== '-') {
+            // Show button and set up link
+            viewProjectBtn.href = project.projectUrl;
+            viewProjectBtn.target = '_blank';
+            viewProjectBtn.rel = 'noopener noreferrer';
+            viewProjectBtn.style.display = ''; // Show button
+        } else {
+            // Hide button when no valid URL
+            viewProjectBtn.removeAttribute('href');
+            viewProjectBtn.removeAttribute('target');
+            viewProjectBtn.removeAttribute('rel');
+            viewProjectBtn.style.display = 'none';
+        }
     }
 
 
